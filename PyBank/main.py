@@ -1,7 +1,7 @@
 import os
 import csv
 
-budget_data = os.path.join("budget_data.csv")
+budget_data = os.path.join("Resources/budget_data.csv")
 
 list_months = []
 list_profit_loss = []
@@ -47,16 +47,20 @@ with open(budget_data, 'r') as csvfile:
         greatest_decrease = (min(increase_decrease))
         date_decrease = str(list_months[increase_decrease.index(min(increase_decrease))+1])
 #print the analysis to the terminal and export a text file with the results.
+        template="{:,.2f}"
+        output_months=template.format(column_sum)
+        output_inc = template.format(greatest_increase)
+        output_dec = template.format(greatest_decrease)
+
     print("Financial Analysis")
     print("-------------------------------")
     print(f"Total Months:  {total_months}")
-    print(f"Total: $ {str(column_sum)}")
-    print(f"Average Change: {str(average)}")
-    print(f"Greatest Increase in Profits: {date_increase} ({(str(greatest_increase))})")
-    print(f"Greatest Decrease in Profits: {date_decrease} ({(str(greatest_decrease))})")
-    
+    print("Total: $",output_months)
+    print("Average Change:", (round(average, 2)))
+    print(f"Greatest Increase in Profits:", (date_increase), "  $",(output_inc))
+    print(f"Greatest Decrease in Profits:", (date_decrease), "  $",(output_dec))
 
 results = os.path.join("final_results.txt")
-output= ("Financial Analysis" + "\n" + "-------------------------------"+ "\n" +  "Total: $" + str(column_sum)+ "\n" + "Average Change:" + str(average) + "\n" + "Greatest Increase in Profits:" + date_increase + str(greatest_increase) + "\n" + "Greatest Decrease in Profits:" + date_decrease + str(greatest_decrease))
+output= ("Financial Analysis" + "\n" + "-------------------------------"+ "\n" + "Total Months: " + (str(total_months)) +"\n" +  "Total: $" + (str(output_months)) + "\n" +"Average Change: " + (str(round(average, 2))) + "\n"  +"Greatest Increase in Profits: "  +(str(date_increase)) + "  $" + (str(output_inc)) + "\n"  +"Greatest Decrease in Profits: " + (str(date_decrease)) +"  $" + (str(output_dec)))
 with open(results, "w") as datafile:
     datafile.write(output)
